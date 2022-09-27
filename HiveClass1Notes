@@ -103,3 +103,47 @@ create table employee_map_data
 # Assignment Dataset
 
 https://www.kaggle.com/datasets/imdevskp/corona-virus-report
+
+
+-----------------------Class Hive 3-----Date: 10sept-------------------------------------------
+
+# haddop fs -ls /
+#hadoop fs -ls /user/hive/warehouse/practice*[get all list of db's]
+# hadoop fs -ls /user/hive/warehouse/hive_class_b1.db/employee(Array_data csv comes here)
+# vim sales_data.csv
+# cp sales_data.csv destinbationLocationDirectory
+
+# first load data as csv
+
+create table sales_data_v2                                                                                                              
+    > (                                                                                                                                       
+    > p_type string,                                                                                                                          
+    > total_sales int                                                                                                                         
+    > )                                                                                                                                       
+    > row format delimited                                                                                                                    
+    > fields terminated by ','; 
+    
+    
+load data local inpath 'file:///tmp/hive_class/sales_data_raw.csv' into table sales_data_v2; 
+
+# command to create identical table
+create table sales_data_v2_bkup as select * from sales_data_v2;
+
+# describe command for a table
+describe extended sales_data_v2;
+
+
+# create a table which will store data in parquet
+
+create table sales_data_pq_final                                                                                                        
+    > (                                                                                                                                       
+    > product_type string,                                                                                                                    
+    > total_sales int                                                                                                                         
+    > )                                                                                                                                       
+    > stored as parquet;  
+    
+# load data in parquet file
+from sales_data_v2 insert overwrite table sales_data_pq_final select *;
+
+
+
