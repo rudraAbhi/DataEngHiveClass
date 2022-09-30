@@ -146,4 +146,12 @@ create table sales_data_pq_final
 from sales_data_v2 insert overwrite table sales_data_pq_final select *;
 
 
+---- Execute hdfs command in hive---0-
+hdfs dfs -ls/....
+(Just remove hdfs from here )- dfs -ls /user/...
+
+
+Note- To see serialised data from hdfs then go to that pertciular location and see. Use cat for watchning the content.
+
+---------------------------hive class 3---------------------------------------------------------------------------
 
