@@ -12,7 +12,7 @@ create table department_data
     
 describe department_data;
 
-describe formatted department_data;
+describe formatted department_data;--[for detailed table info]
 
 # For data load from local
 load data local inpath 'file:///tmp/hive_class/depart_data.csv' into table department_data; 
@@ -110,7 +110,8 @@ https://www.kaggle.com/datasets/imdevskp/corona-virus-report
 # haddop fs -ls /
 #hadoop fs -ls /user/hive/warehouse/practice*[get all list of db's]
 # hadoop fs -ls /user/hive/warehouse/hive_class_b1.db/employee(Array_data csv comes here)
-# vim sales_data.csv
+# vim sales_data.csv  {to save and exit - esc -> :wq} 
+# cat sales-data.csv {to watch the content of it}
 # cp sales_data.csv destinbationLocationDirectory
 
 # first load data as csv
@@ -153,5 +154,40 @@ hdfs dfs -ls/....
 
 Note- To see serialised data from hdfs then go to that pertciular location and see. Use cat for watchning the content.
 
----------------------------hive class 3---------------------------------------------------------------------------
+---------------------------hive class 4 Practical---------------------------------------------------------------------------
+
+Internal table = managed table
+Serde - serialisation and deserialisation
+
+Input format of pq table- Parquet serde
+Output format of ""- Parquet serde
+serde library of ''- Parquet hive serde
+
+HQL get converted to --- mapReduce task in backednd
+
+complete process of serialisation and deserialisation in hadoop------
+            
+            [HDFS] -----------------------------> [MAP] --------|||||| --------[REDUCE]--------------------- -------------------------> [HDFS]
+            {have deseria;ised data}          {use serde library to             {use serde library to process pq table to       { create a seria;ised table data }
+                                                 process parquet table data      reduce in backend }
+                                                 and map it }
+                                                 
+ NOTE 1. If the incoming raw data in any specific format (Not in simple ',' delimjted then we use a library for it)(Library can be found on web)
+ data sample-
+    name, location
+    Amit, "Bangalore, India"
+    Rahul,"Ranchi,India"
+    ravi,"Jammu,India"
+    
+ ex- to craete a table which takes data from a csv file in a speficic format----\
+    # create table csv_table (
+    name string, location string
+    ) 
+    row format serde 'org.apache.hadoop.hive.serde2.OpenCSVSerde'
+    with serdeproperties ("separatorChar" =",",                                                      //// for separator
+            "quoteChar"="/"",                                                                           
+            "escapeChar"="//")                                                                          // to escape a char
+            stored as textfile                                                                           /// storing as textfile
+            tblproperties ("skip.header.line.count" ="1")                                                ///line 1 is header , so added this 
+            
 
