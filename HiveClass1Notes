@@ -175,7 +175,7 @@ complete process of serialisation and deserialisation in hadoop------
  NOTE 1. If the incoming raw data in any specific format (Not in simple ',' delimjted then we use a library for it)(Library can be found on web)
  data sample-
     name, location
-    Amit, "Bangalore, India"
+    Amit, "Bangalore, India" 
     Rahul,"Ranchi,India"
     ravi,"Jammu,India"
     
@@ -190,4 +190,4 @@ complete process of serialisation and deserialisation in hadoop------
             stored as textfile                                                                           /// storing as textfile
             tblproperties ("skip.header.line.count" ="1")                                                ///line 1 is header , so added this 
             
-
+    
